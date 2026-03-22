@@ -167,7 +167,24 @@ build-orange-pi-zero3: generate
 ## deploy-orange-pi-zero3: Build and deploy to Orange Pi Zero 3
 deploy-orange-pi-zero3: build-orange-pi-zero3
 	@echo "Deploying to Orange Pi Zero 3 (192.168.9.112)..."
-	scp $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64 orangepi@192.168.9.112:~/
+	scp $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64 orangepi@192.168.9.112:~/$(BINARY_NAME)
+	@echo "Deploy complete!"
+
+## build-orange-pi-zero3-launcher: Build picoclaw-launcher (web console) for Orange Pi Zero 3 (Linux ARM64)
+build-orange-pi-zero3-launcher:
+	@echo "Building picoclaw-launcher for Orange Pi Zero 3 (linux/arm64)..."
+	@mkdir -p $(BUILD_DIR)
+	@if [ ! -f web/backend/dist/index.html ]; then \
+		echo "Building frontend..."; \
+		cd web/frontend && bun install && bun build:backend; \
+	fi
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build $(GOFLAGS) -o $(BUILD_DIR)/picoclaw-launcher-orange-pi-zero3 ./web/backend
+	@echo "Build complete: $(BUILD_DIR)/picoclaw-launcher-orange-pi-zero3"
+
+## deploy-orange-pi-zero3-launcher: Build and deploy picoclaw-launcher to Orange Pi Zero 3
+deploy-orange-pi-zero3-launcher: build-orange-pi-zero3-launcher
+	@echo "Deploying picoclaw-launcher to Orange Pi Zero 3 (192.168.9.112)..."
+	scp $(BUILD_DIR)/picoclaw-launcher-orange-pi-zero3 orangepi@192.168.9.112:~/picoclaw-launcher
 	@echo "Deploy complete!"
 
 ## build-linux-mipsle: Build for Linux MIPS32 LE

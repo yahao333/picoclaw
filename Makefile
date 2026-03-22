@@ -157,6 +157,13 @@ build-linux-arm64: generate
 	GOOS=linux GOARCH=arm64 $(GO) build -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64 ./$(CMD_DIR)
 	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64"
 
+## build-orange-pi-zero3: Build for Orange Pi Zero 3 (Allwinner H618, ARM64)
+build-orange-pi-zero3: generate
+	@echo "Building for Orange Pi Zero 3 (linux/arm64)..."
+	@mkdir -p $(BUILD_DIR)
+	GOOS=linux GOARCH=arm64 $(GO) build -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64 ./$(CMD_DIR)
+	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64"
+
 ## build-linux-mipsle: Build for Linux MIPS32 LE
 build-linux-mipsle: generate
 	@echo "Building for linux/mipsle (softfloat)..."

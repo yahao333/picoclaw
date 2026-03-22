@@ -164,6 +164,12 @@ build-orange-pi-zero3: generate
 	GOOS=linux GOARCH=arm64 $(GO) build -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64 ./$(CMD_DIR)
 	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64"
 
+## deploy-orange-pi-zero3: Build and deploy to Orange Pi Zero 3
+deploy-orange-pi-zero3: build-orange-pi-zero3
+	@echo "Deploying to Orange Pi Zero 3 (192.168.9.112)..."
+	scp $(BUILD_DIR)/$(BINARY_NAME)-linux-arm64 orangepi@192.168.9.112:~/
+	@echo "Deploy complete!"
+
 ## build-linux-mipsle: Build for Linux MIPS32 LE
 build-linux-mipsle: generate
 	@echo "Building for linux/mipsle (softfloat)..."

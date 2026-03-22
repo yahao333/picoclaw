@@ -62,3 +62,5 @@ web/backend/dist/*
 
 
 docker/data
+
+.claude/

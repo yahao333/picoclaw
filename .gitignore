@@ -73,3 +73,10 @@ web/backend/dist/*
 docker/data
 
 .omc/
+
+# skills
+.agents/
+.trae/
+CLAUDE.md
+docs/agents/
+skills-lock.json
